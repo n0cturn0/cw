@@ -31,7 +31,7 @@
                             <ul class="navbar-nav">
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#howitworks">How it works</a>
+                                    <a class="nav-link" href="#howitworks">How it worksd</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#services">Our Services </a>
