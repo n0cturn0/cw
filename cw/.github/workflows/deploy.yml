@@ -1,0 +1,36 @@
+name: Deploy Laravel to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: 🚀 Deploy Laravel (Build Locally)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout o código do repositório
+      - name: 🛠  Checkout Code
+        uses: actions/checkout@v3
+
+      
+
+      # 4. Configurar SSH e preparar o Deploy
+      - name: 📂 Deploy via rsync
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "${SSH_PRIVATE_KEY}" > private_key.pem
+          chmod 600 private_key.pem
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 65002 ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+          # Sincronizar arquivos para o servidor (excluindo o que não é necessário)
+          rsync -avz --progress -e "ssh -i private_key.pem -p 65002" \
+            --exclude=.git \
+            --exclude=tests \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/u862237125/domains/coworkingbusiness067.com.br/
+
+     
